@@ -42,7 +42,7 @@
 
     .photo img {
       display: block;
-      width: 200px;
+      width: 600px;
       height: auto;
       pointer-events: none;
     }
@@ -167,7 +167,17 @@
     <img src="./images/belleEdit27.png" alt="photo" draggable="false" />
   </div>
   <script>
-    let topZ = 10;
+    document.querySelectorAll('.photo').forEach((photo, i) => {
+      const left = Math.floor(Math.random() * (window.innerWidth  - 280));
+      const top  = Math.floor(Math.random() * (window.innerHeight - 180));
+      const rot  = (Math.random() * 30 - 15).toFixed(1);
+      photo.style.left = left + 'px';
+      photo.style.top  = top  + 'px';
+      photo.style.setProperty('--r', rot + 'deg');
+      photo.style.zIndex = i + 1;
+    });
+
+    let topZ = 27;
 
     document.querySelectorAll('.photo').forEach(photo => {
       let dragging = false;
