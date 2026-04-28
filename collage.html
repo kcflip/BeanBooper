@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Collage</title>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: #1e1510;
+      overflow: hidden;
+    }
+
+    @keyframes wiggle {
+      0%   { transform: rotate(var(--r)) scale(1.05); }
+      25%  { transform: rotate(calc(var(--r) + 4deg)) scale(1.05); }
+      50%  { transform: rotate(calc(var(--r) - 3deg)) scale(1.05); }
+      75%  { transform: rotate(calc(var(--r) + 2deg)) scale(1.05); }
+      100% { transform: rotate(var(--r)) scale(1.05); }
+    }
+
+    .photo {
+      position: absolute;
+      transform: rotate(var(--r));
+      cursor: grab;
+      user-select: none;
+      touch-action: none;
+    }
+
+    .photo:hover:not(.dragging) {
+      animation: wiggle 0.45s ease-in-out infinite;
+    }
+
+    .photo.dragging {
+      cursor: grabbing;
+      animation: none !important;
+      transform: rotate(var(--r)) scale(1.06);
+    }
+
+    .photo img {
+      display: block;
+      width: 200px;
+      height: auto;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!--
+    HOW TO ADD PHOTOS:
+      1. Put your outlined PNGs in the same folder as this file
+      2. Replace "your-image.png" with your actual filename
+      3. Update the caption text
+      4. Adjust left/top to position, and --r for tilt (mix +/- degrees)
+      5. Duplicate a .photo block to add more images
+  -->
+
+  <div class="photo" style="--r: -6deg; left: 40px; top: 60px; z-index: 3;">
+    <img src="./images/belleEdit01.png" alt="photo" draggable="false" />
+  </div>
+
+  <div class="photo" style="--r: 4deg; left: 180px; top: 120px; z-index: 4;">
+    <img src="./images/belleEdit02.png" alt="photo" draggable="false" />
+  </div>
+
+  <div class="photo" style="--r: -3deg; left: 340px; top: 40px; z-index: 2;">
+    <img src="./images/belleEdit03.png" alt="photo" draggable="false" />
+  </div>
+
+  <div class="photo" style="--r: 8deg; left: 520px; top: 90px; z-index: 5;">
+    <img src="./images/belleEdit04.png" alt="photo" draggable="false" />
+  </div>
+
+  <div class="photo" style="--r: -9deg; left: 700px; top: 50px; z-index: 3;">
+    <img src="./images/belleEdit05.png" alt="photo" draggable="false" />
+  </div>
+
+  <div class="photo" style="--r: 5deg; left: 100px; top: 320px; z-index: 6;">
+    <img src="./images/belleEdit06.png" alt="photo" draggable="false" />
+  </div>
+
+  <div class="photo" style="--r: -2deg; left: 420px; top: 300px; z-index: 2;">
+    <img src="./images/belleEdit07.png" alt="photo" draggable="false" />
+  </div>
+
+  <div class="photo" style="--r: 7deg; left: 640px; top: 330px; z-index: 4;">
+    <img src="./images/belleEdit08.png" alt="photo" draggable="false" />
+  </div>  
+  
+  <div class="photo" style="--r: -9deg; left: 700px; top: 50px; z-index: 3;">
+    <img src="./images/belleEdit09.png" alt="photo" draggable="false" />
+  </div>
+
+  <div class="photo" style="--r: 5deg; left: 100px; top: 320px; z-index: 6;">
+    <img src="./images/belleEdit10.png" alt="photo" draggable="false" />
+  </div>
+
+  <div class="photo" style="--r: -2deg; left: 420px; top: 300px; z-index: 2;">
+    <img src="./images/belleEdit11.png" alt="photo" draggable="false" />
+  </div>
+
+  <div class="photo" style="--r: 7deg; left: 640px; top: 330px; z-index: 4;">
+    <img src="./images/belleEdit12.png" alt="photo" draggable="false" />
+  </div>
+
+    <div class="photo" style="--r: -9deg; left: 700px; top: 50px; z-index: 3;">
+    <img src="./images/belleEdit13.png" alt="photo" draggable="false" />
+  </div>
+
+  <div class="photo" style="--r: 5deg; left: 100px; top: 320px; z-index: 6;">
+    <img src="./images/belleEdit14.png" alt="photo" draggable="false" />
+  </div>
+
+  <div class="photo" style="--r: -2deg; left: 420px; top: 300px; z-index: 2;">
+    <img src="./images/belleEdit15.png" alt="photo" draggable="false" />
+  </div>
+
+  <div class="photo" style="--r: 7deg; left: 640px; top: 330px; z-index: 4;">
+    <img src="./images/belleEdit16.png" alt="photo" draggable="false" />
+  </div>
+
+    <div class="photo" style="--r: -9deg; left: 700px; top: 50px; z-index: 3;">
+    <img src="./images/belleEdit17.png" alt="photo" draggable="false" />
+  </div>
+
+  <div class="photo" style="--r: 5deg; left: 100px; top: 320px; z-index: 6;">
+    <img src="./images/belleEdit18.png" alt="photo" draggable="false" />
+  </div>
+
+  <div class="photo" style="--r: -2deg; left: 420px; top: 300px; z-index: 2;">
+    <img src="./images/belleEdit19.png" alt="photo" draggable="false" />
+  </div>
+
+  <div class="photo" style="--r: 7deg; left: 640px; top: 330px; z-index: 4;">
+    <img src="./images/belleEdit20.png" alt="photo" draggable="false" />
+  </div>
+
+  <div class="photo" style="--r: 5deg; left: 100px; top: 320px; z-index: 6;">
+    <img src="./images/belleEdit21.png" alt="photo" draggable="false" />
+  </div>
+
+  <div class="photo" style="--r: -2deg; left: 420px; top: 300px; z-index: 2;">
+    <img src="./images/belleEdit22.png" alt="photo" draggable="false" />
+  </div>
+
+  <div class="photo" style="--r: 7deg; left: 640px; top: 330px; z-index: 4;">
+    <img src="./images/belleEdit23.png" alt="photo" draggable="false" />
+  </div>
+  
+  <div class="photo" style="--r: -9deg; left: 700px; top: 50px; z-index: 3;">
+    <img src="./images/belleEdit24.png" alt="photo" draggable="false" />
+  </div>
+
+  <div class="photo" style="--r: 5deg; left: 100px; top: 320px; z-index: 6;">
+    <img src="./images/belleEdit25.png" alt="photo" draggable="false" />
+  </div>
+
+  <div class="photo" style="--r: -2deg; left: 420px; top: 300px; z-index: 2;">
+    <img src="./images/belleEdit26.png" alt="photo" draggable="false" />
+  </div>
+
+  <div class="photo" style="--r: 7deg; left: 640px; top: 330px; z-index: 4;">
+    <img src="./images/belleEdit27.png" alt="photo" draggable="false" />
+  </div>
+  <script>
+    let topZ = 10;
+
+    document.querySelectorAll('.photo').forEach(photo => {
+      let dragging = false;
+      let startX, startY, startLeft, startTop;
+
+      photo.addEventListener('mousedown', e => {
+        dragging = true;
+        photo.classList.add('dragging');
+        photo.style.zIndex = ++topZ;
+        startX = e.clientX;
+        startY = e.clientY;
+        startLeft = photo.offsetLeft;
+        startTop = photo.offsetTop;
+        e.preventDefault();
+      });
+
+      document.addEventListener('mousemove', e => {
+        if (!dragging) return;
+        photo.style.left = (startLeft + e.clientX - startX) + 'px';
+        photo.style.top  = (startTop  + e.clientY - startY) + 'px';
+      });
+
+      document.addEventListener('mouseup', () => {
+        if (!dragging) return;
+        dragging = false;
+        photo.classList.remove('dragging');
+      });
+    });
+  </script>
+
+</body>
+</html>
