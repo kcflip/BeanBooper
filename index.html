@@ -22,6 +22,34 @@
       100% { transform: rotate(var(--r)) scale(1.05); }
     }
 
+    @keyframes sway {
+      0%   { transform: rotate(var(--r)) scale(1.05); }
+      50%  { transform: rotate(calc(var(--r) + 9deg)) scale(1.05); }
+      100% { transform: rotate(var(--r)) scale(1.05); }
+    }
+
+    @keyframes bounce {
+      0%   { transform: rotate(var(--r)) scale(1.05) translateY(0); }
+      40%  { transform: rotate(var(--r)) scale(1.08) translateY(-14px); }
+      60%  { transform: rotate(var(--r)) scale(1.06) translateY(-8px); }
+      100% { transform: rotate(var(--r)) scale(1.05) translateY(0); }
+    }
+
+    @keyframes jitter {
+      0%   { transform: rotate(var(--r)) scale(1.05); }
+      20%  { transform: rotate(calc(var(--r) + 6deg)) scale(1.05); }
+      40%  { transform: rotate(calc(var(--r) - 5deg)) scale(1.05); }
+      60%  { transform: rotate(calc(var(--r) + 7deg)) scale(1.05); }
+      80%  { transform: rotate(calc(var(--r) - 4deg)) scale(1.05); }
+      100% { transform: rotate(var(--r)) scale(1.05); }
+    }
+
+    @keyframes float {
+      0%   { transform: rotate(var(--r)) scale(1.05) translateY(0); }
+      50%  { transform: rotate(calc(var(--r) - 2deg)) scale(1.05) translateY(-18px); }
+      100% { transform: rotate(var(--r)) scale(1.05) translateY(0); }
+    }
+
     .photo {
       position: absolute;
       transform: rotate(var(--r));
@@ -31,7 +59,7 @@
     }
 
     .photo:hover:not(.dragging) {
-      animation: wiggle 0.45s ease-in-out infinite;
+      animation: var(--anim, wiggle) var(--dur, 0.45s) ease-in-out infinite;
     }
 
     .photo.dragging {
@@ -42,9 +70,30 @@
 
     .photo img {
       display: block;
-      width: 600px;
+      width: 400px;
       height: auto;
       pointer-events: none;
+    }
+
+    .bean {
+      position: fixed;
+      top: -80px;
+      pointer-events: none;
+      z-index: 0;
+      width: var(--bw);
+      height: auto;
+    }
+
+    @keyframes bean-rain {
+      0%   { transform: translateY(0)               rotate(0deg); }
+      100% { transform: translateY(calc(100vh + 160px)) rotate(var(--spin)); }
+    }
+
+    @keyframes bean-rain-drift {
+      0%   { transform: translateY(0)                    translateX(0)    rotate(0deg); }
+      30%  { transform: translateY(30vh)                 translateX(18px) rotate(calc(var(--spin) * 0.3)); }
+      70%  { transform: translateY(70vh)                 translateX(-14px) rotate(calc(var(--spin) * 0.7)); }
+      100% { transform: translateY(calc(100vh + 160px))  translateX(6px)  rotate(var(--spin)); }
     }
   </style>
 </head>
@@ -167,13 +216,47 @@
     <img src="./images/belleEdit27.png" alt="photo" draggable="false" />
   </div>
   <script>
+    // --- raining beans ---
+    const rand = (min, max) => min + Math.random() * (max - min);
+
+    for (let i = 0; i < 120; i++) {
+      const b = document.createElement('img');
+      b.className = 'bean';
+      b.src = './images/cartoonBean.png';
+      b.alt = '';
+      const w    = rand(24, 70);
+      const dur  = rand(3, 11).toFixed(1);
+      const spin = (Math.random() > 0.5 ? 1 : -1) * rand(120, 540);
+      const name = Math.random() > 0.4 ? 'bean-rain' : 'bean-rain-drift';
+      b.style.cssText = [
+        `--bw:${w}px`,
+        `left:${rand(0, 100).toFixed(1)}vw`,
+        `opacity:${rand(0.15, 0.55).toFixed(2)}`,
+        `--spin:${spin.toFixed(0)}deg`,
+        `animation:${name} ${dur}s linear infinite -${rand(0, parseFloat(dur)).toFixed(1)}s`,
+      ].join(';');
+      document.body.insertBefore(b, document.body.firstChild);
+    }
+
+    // --- photo animations ---
+    const animOptions = [
+      { name: 'wiggle', minDur: 0.35, maxDur: 0.55 },
+      { name: 'sway',   minDur: 1.5,  maxDur: 2.5  },
+      { name: 'bounce', minDur: 0.4,  maxDur: 0.7  },
+      { name: 'jitter', minDur: 0.2,  maxDur: 0.35 },
+    ];
+
     document.querySelectorAll('.photo').forEach((photo, i) => {
-      const left = Math.floor(Math.random() * (window.innerWidth  - 280));
-      const top  = Math.floor(Math.random() * (window.innerHeight - 180));
+      const left = Math.floor(rand(-200, window.innerWidth  - 200));
+      const top  = Math.floor(rand(-150, window.innerHeight - 150));
       const rot  = (Math.random() * 30 - 15).toFixed(1);
+      const anim = animOptions[Math.floor(Math.random() * animOptions.length)];
+      const dur  = (anim.minDur + Math.random() * (anim.maxDur - anim.minDur)).toFixed(2) + 's';
       photo.style.left = left + 'px';
       photo.style.top  = top  + 'px';
-      photo.style.setProperty('--r', rot + 'deg');
+      photo.style.setProperty('--r',    rot + 'deg');
+      photo.style.setProperty('--anim', anim.name);
+      photo.style.setProperty('--dur',  dur);
       photo.style.zIndex = i + 1;
     });
 
