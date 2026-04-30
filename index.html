@@ -37,10 +37,10 @@
 
     @keyframes jitter {
       0%   { transform: rotate(var(--r)) scale(1.05); }
-      20%  { transform: rotate(calc(var(--r) + 6deg)) scale(1.05); }
-      40%  { transform: rotate(calc(var(--r) - 5deg)) scale(1.05); }
-      60%  { transform: rotate(calc(var(--r) + 7deg)) scale(1.05); }
-      80%  { transform: rotate(calc(var(--r) - 4deg)) scale(1.05); }
+      20%  { transform: rotate(calc(var(--r) + 12deg)) scale(1.1); }
+      40%  { transform: rotate(calc(var(--r) - 5deg)) scale(1.1); }
+      60%  { transform: rotate(calc(var(--r) + 14deg)) scale(1.1); }
+      80%  { transform: rotate(calc(var(--r) - 3deg)) scale(1.1); }
       100% { transform: rotate(var(--r)) scale(1.05); }
     }
 
@@ -243,7 +243,7 @@
       { name: 'wiggle', minDur: 0.35, maxDur: 0.55 },
       { name: 'sway',   minDur: 1.5,  maxDur: 2.5  },
       { name: 'bounce', minDur: 0.4,  maxDur: 0.7  },
-      { name: 'jitter', minDur: 0.2,  maxDur: 0.35 },
+      { name: 'jitter', minDur: 0.5,  maxDur: 0.9 },
     ];
 
     document.querySelectorAll('.photo').forEach((photo, i) => {
