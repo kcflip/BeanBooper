@@ -230,7 +230,7 @@
       const name = Math.random() > 0.4 ? 'bean-rain' : 'bean-rain-drift';
       b.style.cssText = [
         `--bw:${w}px`,
-        `left:${rand(0, 100).toFixed(1)}vw`,
+        `left:${rand(0, window.innerWidth).toFixed(1)}px`,
         `opacity:${rand(0.15, 0.55).toFixed(2)}`,
         `--spin:${spin.toFixed(0)}deg`,
         `animation:${name} ${dur}s linear infinite -${rand(0, parseFloat(dur)).toFixed(1)}s`,
@@ -260,34 +260,51 @@
       photo.style.zIndex = i + 1;
     });
 
+    // --- dragging (mouse + touch) ---
     let topZ = 27;
+    let activeDrag = null;
 
     document.querySelectorAll('.photo').forEach(photo => {
-      let dragging = false;
-      let startX, startY, startLeft, startTop;
-
-      photo.addEventListener('mousedown', e => {
-        dragging = true;
+      function startDrag(clientX, clientY) {
         photo.classList.add('dragging');
         photo.style.zIndex = ++topZ;
-        startX = e.clientX;
-        startY = e.clientY;
-        startLeft = photo.offsetLeft;
-        startTop = photo.offsetTop;
+        activeDrag = { photo, startX: clientX, startY: clientY, startLeft: photo.offsetLeft, startTop: photo.offsetTop };
+      }
+
+      photo.addEventListener('mousedown', e => {
+        startDrag(e.clientX, e.clientY);
         e.preventDefault();
       });
 
-      document.addEventListener('mousemove', e => {
-        if (!dragging) return;
-        photo.style.left = (startLeft + e.clientX - startX) + 'px';
-        photo.style.top  = (startTop  + e.clientY - startY) + 'px';
-      });
+      photo.addEventListener('touchstart', e => {
+        startDrag(e.touches[0].clientX, e.touches[0].clientY);
+        e.preventDefault();
+      }, { passive: false });
+    });
 
-      document.addEventListener('mouseup', () => {
-        if (!dragging) return;
-        dragging = false;
-        photo.classList.remove('dragging');
-      });
+    document.addEventListener('mousemove', e => {
+      if (!activeDrag) return;
+      activeDrag.photo.style.left = (activeDrag.startLeft + e.clientX - activeDrag.startX) + 'px';
+      activeDrag.photo.style.top  = (activeDrag.startTop  + e.clientY - activeDrag.startY) + 'px';
+    });
+
+    document.addEventListener('touchmove', e => {
+      if (!activeDrag) return;
+      activeDrag.photo.style.left = (activeDrag.startLeft + e.touches[0].clientX - activeDrag.startX) + 'px';
+      activeDrag.photo.style.top  = (activeDrag.startTop  + e.touches[0].clientY - activeDrag.startY) + 'px';
+      e.preventDefault();
+    }, { passive: false });
+
+    document.addEventListener('mouseup', () => {
+      if (!activeDrag) return;
+      activeDrag.photo.classList.remove('dragging');
+      activeDrag = null;
+    });
+
+    document.addEventListener('touchend', () => {
+      if (!activeDrag) return;
+      activeDrag.photo.classList.remove('dragging');
+      activeDrag = null;
     });
   </script>
 
